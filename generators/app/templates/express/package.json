@@ -1,0 +1,19 @@
+{
+  "name": "wall-e-automate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "glob": "^7.0.3",
+    "webpack": "^1.12.2",
+    "debug": "^2.2.0"
+  },
+  "scripts": {
+    "start": "DEBUG=express:* node server",
+    "test": "test"
+  },
+  "author": "Eder Eduardo",
+  "license": "ISC"
+}
+

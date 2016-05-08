@@ -1,7 +1,9 @@
+var debug = require('debug')('cli-app');
 var express = require('express');
 var app = express();
 var glob = require('glob');
 var fs = require('fs');
+var PORT = 4000;
 var content;
 
 glob("./routes/*.json", function (er, files) {
@@ -11,9 +13,8 @@ glob("./routes/*.json", function (er, files) {
   });
 })
 
-app.listen(3000, function () {
-});
+app.use('/apps', express.static(__dirname + '/public'));
 
-app.use(require('connect-livereload')({
-  port: 3000
-}));
+app.listen(PORT, function () {
+  debug('Wall-e server listening on port ' + PORT);
+});
