@@ -3,6 +3,13 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var mkdirp = require('mkdirp');
+var util = require('util');
+
+var APPS_FOLDER = 'apps/';
+var ROUTES_FOLDER = 'routes/';
+var route_app_name;
+var routesArray;
+
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -15,7 +22,6 @@ module.exports = yeoman.Base.extend({
   },
 
   prompting: function () {
-   if(this.projectInit) return;
     var done = this.async();
 
     // Have Yeoman greet the user.
@@ -26,8 +32,19 @@ module.exports = yeoman.Base.extend({
     var prompts = [{
       type: 'input',
       name: 'projectName',
-      message: 'What is the name of your App?',
-    }];
+      message: 'What is the name of your App?'
+    },
+    {
+      type: 'input',
+      name: 'appRoutes',
+      message : 'Now you need say which are routes path your app, separated by comma.',
+    },
+    {
+      type: 'confirm',
+      name: 'routes',
+      message: 'Confirmation routes?'
+    }
+    ];
 
     this.prompt(prompts, function (props) {
       this.props = props;
@@ -46,7 +63,7 @@ module.exports = yeoman.Base.extend({
    if(!this.projectInit) return;
     this.fs.copy(
       this.templatePath('express/'),
-      this.destinationPath('')
+      this.destinationPath('./')
     );
     mkdirp('routes/');
     mkdirp('apps/');
@@ -59,7 +76,12 @@ module.exports = yeoman.Base.extend({
       app_name_slug += this.props.projectName[i].replace(' ', '-');
     }
     mkdirp('apps/' + app_name_slug);
-
+    route_app_name = ROUTES_FOLDER + app_name_slug + '.json';
+    routesArray = this.props.appRoutes.split(',');
+    this.fs.writeJSON(route_app_name,{
+      app: {
+        routes: routesArray
+      }});
   },
   
   install: function () {

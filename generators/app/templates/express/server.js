@@ -7,11 +7,16 @@ var PORT = 4000;
 var content;
 
 glob("./routes/*.json", function (er, files) {
-  content = JSON.parse(fs.readFileSync(files[0], 'utf8'));
-  app.get(content.route, function (req, res) {
-    res.send('Hello World!');
-  });
-})
+  for(var i=0; i < files.length; i++) {
+    content = JSON.parse(fs.readFileSync(files[i], 'utf8'));
+    for(var k=0; k < content.app.routes.length; k++){
+      console.log(content.app.routes[k])
+      app.get(content.app.routes[k], function (req, res) {
+        res.send('route name ' + content.app.routes[k]);
+      });
+    }
+  }
+});
 
 app.use('/apps', express.static(__dirname + '/public'));
 
