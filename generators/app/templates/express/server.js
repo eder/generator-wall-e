@@ -13,7 +13,7 @@ glob("./routes/*.json", function (er, files) {
     content = JSON.parse(fs.readFileSync(files[i], 'utf8'));
     for(var k=0; k < content.app.routes.length; k++){
       console.log(content.app.routes[k])
-      app.get(content.app.routes[k], function (req, res) {
+      app.get('/' + content.app.routes[k] + '/', function (req, res) {
         res.render('index.html');
       });
     }

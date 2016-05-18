@@ -80,8 +80,22 @@ module.exports = yeoman.Base.extend({
     routesArray = this.props.appRoutes.split(',');
     this.fs.writeJSON(route_app_name,{
       app: {
-        routes: routesArray
-      }});
+        path: app_name_slug,
+        page: 'teaser.html',
+        opened: {
+          date: '123',
+          page: 'opened.html'
+        },
+        closed: {
+          date: '456',
+          page: 'closed.html'
+        },
+        extended: {
+          date: '789',
+          page: 'extended.html'
+        }
+      }
+    });
   },
   
   install: function () {
